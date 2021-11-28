@@ -1,8 +1,6 @@
 from typing import List
-from numpy.lib import select
 import pandas as pd
 import numpy as np
-from pandas.core.frame import DataFrame
 
 
 class InformationGain:
@@ -90,11 +88,11 @@ class InformationGain:
         """
 
         Args:
-            samples (pd.DataFrame): [description]
-            feature_name (str): [description]
+            samples (pd.DataFrame): Data samples
+            feature_name (str): The name of the feature and the label of the column
 
         Returns:
-            np.float64: [description]
+            np.float64: The information gain of the feature
         """
         total_entropy = self.entropy(samples)
 
