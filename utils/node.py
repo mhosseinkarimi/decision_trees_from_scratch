@@ -30,7 +30,7 @@ class Node():
         
         feature_igs = np.array(feature_igs)
 
-        self.main_feature = feature_igs[np.argmax(feature_igs)]
+        self.main_feature = feature_cols[np.argmax(feature_igs)]
 
     def calculate_loss(self, samples: pd.DataFrame) -> np.float64:
         """Calculates the entropy of the input samples
