@@ -3,7 +3,7 @@ from numpy import select
 
 class UI:
     def __init__(self):
-        self.load_from_csv = None
+        self.load_option = None
         self.train_path = None
         self.test_path = None
         self.feature_names = []
@@ -21,8 +21,8 @@ class UI:
         self.train_info()
 
     def data_info(self):
-        self.load_from_csv = {'y': True, 'n': False}[input("Do you want to load data from csv files? [y/n]: ")]
-        
+        self.load_option = int(input("How do you want to load data? :\n1) Load csv file\n2) Load from original file\n3) create csv file then read from csv file\nchoose the option number [1,2,3]: "))
+
         print("Please enter the path to the data files")
         self.train_path = input("Train file path: ")
         self.test_path = input("Test file path: ")
