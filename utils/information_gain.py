@@ -4,7 +4,16 @@ import numpy as np
 
 
 class InformationGain:
-    def __init__(self, target_label: str = 'label'):
+    """InformationGain provides utilities for computing information gain in hierarchical data structures such as trees.
+
+    """
+
+    def __init__(self, target_label: str = 'label') -> None:
+        """For initializing this class you can pass the label of the target data column.
+
+        Args:
+            target_label (str, optional): target data column label. Defaults to 'label'.
+        """
         self.target_label = target_label
 
     def split(self, samples: pd.DataFrame, condition: str) -> List:
@@ -85,7 +94,7 @@ class InformationGain:
         return conditional_entropy
 
     def information_gain(self, samples: pd.DataFrame, feature_name: str,) -> np.float64:
-        """
+        """This method calculate the information gain of a feature with respect too the parent node.
 
         Args:
             samples (pd.DataFrame): Data samples
