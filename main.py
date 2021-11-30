@@ -1,5 +1,5 @@
 from data.dataloader import DataLoader
-from models.tree import DecisionTree
+from models.decision_tree import DecisionTree
 from utils.ui import UI
 from utils.metrics import accuracy
 from sklearn.model_selection import train_test_split, KFold
@@ -13,11 +13,14 @@ if __name__ == "__main__":
     # Loading data
     dataloader = DataLoader(ui.train_path, ui.test_path, ui.feature_names)
 
-    if ui.load_from_csv:
+    if ui.load_option == 1:
         data = dataloader.load_from_csv(
             ui.load_test, ui.train_path, ui.test_path)
+    elif ui.load_option == 2:
+        data = dataloader.load_from_file(ui.load_test)
     else:
-        data = dataloader.load(ui.load_test)
+        dataloader.create_csv("./train.csv", "./test.csv")
+        data = dataloader.load_from_csv(ui.load_test, "./train.csv", "./test.csv")
 
     if ui.load_test:
         train_data, test_data = data
