@@ -59,8 +59,8 @@ class DataLoader:
 
         return df_copy
 
-    def load(self, train_csv_path: str = 'data/train.csv', test_csv_path: str = 'data/test.csv') -> None:
-        """Loads the train and test dataset as DataFrame.
+    def create_csv(self, train_csv_path: str = 'data/train.csv', test_csv_path: str = 'data/test.csv') -> None:
+        """Creates csv file of  the train and test dataset as DataFrame.
 
         Returns:
             Tuple: a tuple of train and test DataFrames
@@ -75,11 +75,46 @@ class DataLoader:
         test_df = self._tonumerical(test_df)
 
         # creating csv files
-        train_df.to_csv(train_csv_path)
-        test_df.to_csv(test_csv_path)
+        train_df.to_csv(train_csv_path, index=False)
+        test_df.to_csv(test_csv_path, index=False)
 
-if __name__ == '__main__':
-    feature_names = ['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']
-    dataloader = DataLoader('../../Adult/adult.train.10k.discrete', '../../Adult/adult.test.10k.discrete', feature_names)
-    dataloader.load('./train.csv','./test.csv')
-    
+    def load_from_file(self, load_test: bool=True) -> pd.DataFrame:
+        """Loads train and test (if load_tset is True) as DataFrames
+
+        Args:
+            load_test (bool, optional): Determines to whether load test data or not. Defaults to True.
+
+        Returns:
+            pd.DataFrame: One [or two] pd.DataFrames representing train [and test] data
+        """
+        # converting train dataset to DataFrame
+        train_df = self._convert2df(self.train_path, self.feature_names)
+        # converting test dataset to DataFrame
+        test_df = self._convert2df(self.test_path, self.feature_names)
+
+        # converting categorical data to numerical
+        train_df = self._tonumerical(train_df)
+        test_df = self._tonumerical(test_df)
+
+        if load_test:
+            return train_df, test_df
+        
+        return train_df
+
+    def load_from_csv(self, load_test: bool = True, train_csv_path: str = './train.csv', test_csv_path: str = './test.csv') -> pd.DataFrame:
+        """Load the data from csv file
+
+        Args:
+            load_test (bool, optional): determines to whether load test data. Defaults to True.
+            train_csv_path (str, optional): The path to tain csv file. Defaults to './train.csv'.
+            test_csv_path (str, optional): The path to test csv file. Defaults to './test.csv'.
+
+        Returns:
+            pd.DataFrame: Train [and Test] data
+        """
+        train_df = pd.read_csv(train_csv_path)
+        if load_test:
+            test_df = pd.read_csv(test_csv_path)
+            return train_df, test_df
+        
+        return train_df
