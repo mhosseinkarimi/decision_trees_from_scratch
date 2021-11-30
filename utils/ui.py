@@ -1,5 +1,5 @@
 from numpy import select
-
+import os
 
 class UI:
     def __init__(self):
@@ -9,7 +9,7 @@ class UI:
         self.feature_names = []
         self.load_test = None
         self.max_length = None
-        self.target_label = None
+        self.target_label = 'label'
         self.data_split = None
         self.train_split_prc = None 
         self.train_repeat = None
@@ -19,6 +19,8 @@ class UI:
         self.data_info()
         self.tree_info()
         self.train_info()
+        # For Linux systems
+        os.system("clear")
 
     def data_info(self):
         self.load_option = int(input("How do you want to load data? :\n1) Load csv file\n2) Load from original file\n3) create csv file then read from csv file\nchoose the option number [1,2,3]: "))
@@ -44,17 +46,15 @@ class UI:
         self.max_length = int(
             input("Please enter the maximum length of tree: "))
 
-        self.target_label = input("Please Enter the label of target data: ")
-
     def train_info(self):
+        self.kfold = {'y': True, 'n': False}[
+            input("Do you want to perform K-fold corss validation? [y/n]: ")]
+        if self.kfold:
+            self.n_folds = int(input("Please enter the number of folds: "))
+
         self.data_split = {'y': True, 'n': False}[
             input("Do you want to split the train data? [y/n]: ")]
         if self.data_split:
             self.train_split_prc = float(
                 input("What percent of the train dataset do you want to keep? [0 - 1]: "))
-            self.train_repeat = int(input("How many times do you want to repeat training? "))
-
-        self.kfold = {'y': True, 'n': False}[
-            input("Do you want to perform K-fold corss validation? [y/n]: ")]
-        if self.kfold:
-            self.n_folds = int(input("Please enter the number of folds: "))
+        self.train_repeat = int(input("How many times do you want to repeat training? "))
