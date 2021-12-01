@@ -62,7 +62,8 @@ if __name__ == "__main__":
             fold += 1
 
         # test accuracy
-        test_acc = accuracy(tree.predict(test_data))
+        pred, true = tree.predict(test_data)
+        test_acc = accuracy(pred, true)
 
         train_acc = np.mean(train_accs)
         val_acc = np.mean(val_accs)
